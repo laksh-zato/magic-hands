@@ -9,8 +9,6 @@ interface Props {
 export const MadeBy: Component<Props> = (props) => {
   return (
     <p class={classnames(styles.madeBy, props.class)}>
-      Made with <i class="ph ph-heart"></i> by{" "}
-      <a href="https://www.forestinthetree.com/">Forest in the Tree</a>
     </p>
   );
 };

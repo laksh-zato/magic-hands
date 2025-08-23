@@ -21,7 +21,7 @@
   transition: opacity 500ms;
 
   &.initialised {
-    opacity: 0.1;
+    opacity: 0.3;
   }
 }
 
@@ -70,6 +70,42 @@
 
   &.hide {
     opacity: 0;
+  }
+}
+
+.recordButton {
+  @include unstyled-button;
+  position: absolute;
+  top: $size-2;
+  right: calc(#{$size-2} + 32px);
+  width: 24px;
+  height: 24px;
+  transition: all ease-in-out 200ms;
+  color: var(--color-grey-400);
+
+  :global(.ph) {
+    font-size: 24px;
+  }
+
+  &:hover {
+    color: var(--color-grey-200);
+    transform: scale(1.1);
+  }
+
+  &.recording {
+    color: #ff4444;
+    animation: pulse 1.5s infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
   }
 }
 
