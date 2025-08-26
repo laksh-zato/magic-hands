@@ -746,9 +746,14 @@ export const MagicHands = () => {
       if (!videoStream || isRecording()) return;
       
       recordedChunks = [];
-      mediaRecorder = new MediaRecorder(videoStream, {
-        mimeType: 'video/webm;codecs=vp9'
-      });
+      
+      // Try MP4 first, fallback to WebM if not supported
+      let options = { mimeType: 'video/mp4' };
+      if (!MediaRecorder.isTypeSupported('video/mp4')) {
+        options = { mimeType: 'video/webm' };
+      }
+      
+      mediaRecorder = new MediaRecorder(videoStream, options);
       
       mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
@@ -757,11 +762,16 @@ export const MagicHands = () => {
       };
       
       mediaRecorder.onstop = () => {
-        const blob = new Blob(recordedChunks, { type: 'video/webm' });
+        // Determine the MIME type and file extension
+        const mimeType = mediaRecorder?.mimeType || 'video/mp4';
+        const isMP4 = mimeType.includes('mp4');
+        const fileExtension = isMP4 ? 'mp4' : 'webm';
+        
+        const blob = new Blob(recordedChunks, { type: mimeType });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `magic-hands-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.webm`;
+        a.download = `magic-hands-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.${fileExtension}`;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);

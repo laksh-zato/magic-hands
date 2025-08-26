@@ -76,36 +76,53 @@
 .recordButton {
   @include unstyled-button;
   position: absolute;
-  top: $size-2;
-  right: calc(#{$size-2} + 32px);
-  width: 24px;
-  height: 24px;
+  bottom: $size-8;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.85));
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
   transition: all ease-in-out 200ms;
-  color: var(--color-grey-400);
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 
   :global(.ph) {
-    font-size: 24px;
+    font-size: 28px;
+    font-weight: bold;
   }
 
   &:hover {
-    color: var(--color-grey-200);
-    transform: scale(1.1);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.9));
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.2);
   }
 
   &.recording {
-    color: #ff4444;
-    animation: pulse 1.5s infinite;
+    color: #fff;
+    background: linear-gradient(135deg, #ff4444, #ff6666);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 8px 32px rgba(255, 68, 68, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.2);
+    animation: recordingPulse 1.5s infinite;
   }
 }
 
-@keyframes pulse {
+@keyframes recordingPulse {
   0%, 100% {
     opacity: 1;
-    transform: scale(1);
+    transform: translateX(-50%) scale(1);
+    box-shadow: 0 8px 32px rgba(255, 68, 68, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.2);
   }
   50% {
-    opacity: 0.7;
-    transform: scale(1.05);
+    opacity: 0.9;
+    transform: translateX(-50%) scale(1.05);
+    box-shadow: 0 12px 40px rgba(255, 68, 68, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.3);
   }
 }
 
